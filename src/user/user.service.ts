@@ -30,7 +30,7 @@ export class UserService {
 
     const user = await this.userModel.create({ firstName, email, password });
 
-     this.emailService.sendEmail(email, 'Welcome', `Welcome ${firstName}`);
+     this.emailService.sendEmail(  email, 'Welcome', 'Welcome to our coffee shop' );
 
     return { message: 'User created successfully', user };
 
