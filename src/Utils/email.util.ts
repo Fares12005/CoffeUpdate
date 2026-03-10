@@ -12,7 +12,7 @@ export class EmailService {
         auth: {
 
             user: process.env.COMPANY_EMAIL,
-            pass: process.env.COMPANY_PASS
+            pass: "zsqz epwi zzhxksez"
         }
 
     });
