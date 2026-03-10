@@ -7,13 +7,16 @@ import { User } from 'src/DB/models/user.model';
 import { Table } from 'src/DB/models/table.model';
 import { JwtService } from '@nestjs/jwt';
 import { TableStatusEnum } from 'src/common/enum/table.enum';
+import { EmailService } from 'src/Utils/email.util';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(`User`) private userModel: Model<User>,
     @InjectModel(`Table`) private tableModel: Model<Table>,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly emailService: EmailService,
+
   ) {}
   
  async signUp(createUserDto: CreateUserDto) {
@@ -26,6 +29,8 @@ export class UserService {
       throw new BadRequestException('User already exists');
 
     const user = await this.userModel.create({ firstName, email, password });
+
+    await this.emailService.sendEmail(email, 'Welcome', `Welcome ${firstName}`);
 
     return { message: 'User created successfully', user };
 
